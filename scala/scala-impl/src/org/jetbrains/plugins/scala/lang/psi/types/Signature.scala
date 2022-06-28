@@ -33,6 +33,8 @@ trait Signature {
 
   def isExtensionMethod: Boolean = false
 
+  def isExported: Boolean
+
   def isPrivate: Boolean = namedElement match {
     case param: ScClassParameter if !param.isClassMember => true
     case inNameContext(s: ScModifierListOwner) =>

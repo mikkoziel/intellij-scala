@@ -34,7 +34,8 @@ class TermSignature(
   private val tParams:       Seq[TypeParameter],
   override val substitutor:  ScSubstitutor,
   override val namedElement: PsiNamedElement,
-  val hasRepeatedParam:      Array[Int] = Array.empty,
+  override val isExported:   Boolean        = false,
+  val hasRepeatedParam:      Array[Int]     = Array.empty,
   override val renamed:      Option[String] = None
 ) extends Signature
     with ProjectContextOwner {
@@ -204,6 +205,11 @@ class TermSignature(
     case inNameContext(m: ScMember) => m.isSynthetic
     case _                          => false
   }
+
+  def containingClass: PsiClass = namedElement match {
+    case member: PsiMember => member.containingClass
+    case _                 => null
+  }
 }
 
 object TermSignature {
@@ -213,14 +219,24 @@ object TermSignature {
     paramTypes:   Seq[() => ScType],
     substitutor:  ScSubstitutor,
     namedElement: PsiNamedElement,
-    renamed:      Option[String]
+    renamed:      Option[String],
+    isExported:   Boolean
   ): TermSignature =
-    new TermSignature(name, List(paramTypes), Seq.empty, substitutor, namedElement, renamed = renamed)
+    new TermSignature(
+      name,
+      List(paramTypes),
+      Seq.empty,
+      substitutor,
+      namedElement,
+      renamed = renamed,
+      isExported = isExported
+    )
 
   def apply(
     definition:  PsiNamedElement,
     substitutor: ScSubstitutor  = ScSubstitutor.empty,
-    renamed:     Option[String] = None
+    renamed:     Option[String] = None,
+    isExported:  Boolean        = false
   ): TermSignature = definition match {
     case function: ScFunction =>
       new TermSignature(
@@ -229,6 +245,7 @@ object TermSignature {
         function.getTypeParameters.instantiate,
         substitutor,
         function,
+        isExported,
         PhysicalMethodSignature.hasRepeatedParam(function),
         renamed
       )
@@ -239,7 +256,8 @@ object TermSignature {
         Seq.empty,
         substitutor,
         definition,
-        renamed = renamed
+        renamed = renamed,
+        isExported = isExported
       )
   }
 
@@ -247,21 +265,24 @@ object TermSignature {
     name:         String,
     subst:        ScSubstitutor,
     namedElement: PsiNamedElement,
-    renamed:      Option[String] = None
+    renamed:      Option[String] = None,
+    isExported:   Boolean        = false
   ): TermSignature =
-    TermSignature(name, Seq.empty, subst, namedElement, renamed)
+    TermSignature(name, Seq.empty, subst, namedElement, renamed, isExported)
 
   def setter(
     name:       String,
     definition: ScTypedDefinition,
-    subst:      ScSubstitutor = ScSubstitutor.empty,
-    renamed:    Option[String] = None
+    subst:      ScSubstitutor  = ScSubstitutor.empty,
+    renamed:    Option[String] = None,
+    isExported: Boolean        = false
   ): TermSignature = TermSignature(
     name,
     Seq(() => definition.`type`().getOrAny),
     subst,
     definition,
-    renamed
+    renamed,
+    isExported
   )
 
   def scalaSetter(
@@ -353,14 +374,16 @@ object PhysicalMethodSignature {
 final class PhysicalMethodSignature(
   val method:               PsiMethod,
   override val substitutor: ScSubstitutor,
+  override val isExported:  Boolean                  = false,
   extensionTypeParameters:  Option[Seq[ScTypeParam]] = None,
-  override val renamed:     Option[String] = None
+  override val renamed:     Option[String]           = None
 ) extends TermSignature(
   renamed.getOrElse(method.name),
   PhysicalMethodSignature.typesEval(method),
   PhysicalMethodSignature.typeParamsWithExtension(method, extensionTypeParameters.getOrElse(Seq.empty)),
   substitutor,
   method,
+  isExported,
   PhysicalMethodSignature.hasRepeatedParam(method)
 ) {
   override def isScala: Boolean = method.getLanguage.isKindOf(ScalaLanguage.INSTANCE)

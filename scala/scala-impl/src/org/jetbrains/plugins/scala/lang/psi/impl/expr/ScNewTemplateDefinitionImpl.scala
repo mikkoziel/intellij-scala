@@ -222,7 +222,10 @@ final class ScNewTemplateDefinitionImpl(stub: ScTemplateDefinitionStub[ScNewTemp
   override protected def isInterface(namedElement: PsiNamedElement): Boolean = false
 
   @CachedInUserData(this, ModTracker.libraryAware(this))
-  override def psiMethods: Array[PsiMethod] = getAllMethods.filter(_.containingClass == this)
+  override def psiMethods: Array[PsiMethod] =
+    getAllMethodsFiltered(sig =>
+      sig.isExported || sig.containingClass == this
+    )
 
   override protected def keywordTokenType: IElementType = ScalaTokenType.NewKeyword
 

@@ -9,6 +9,7 @@ import com.intellij.psi.PsiReferenceList.Role
 import com.intellij.psi._
 import org.jetbrains.plugins.scala.lang.psi.adapters.PsiClassAdapter
 import org.jetbrains.plugins.scala.lang.psi.api.toplevel.typedef.ScDocCommentOwner
+import org.jetbrains.plugins.scala.lang.psi.types.TermSignature
 
 import _root_.java.util.{Collection, Collections, List}
 
@@ -57,6 +58,8 @@ trait PsiClassFake extends PsiClassAdapter with PsiReferenceList with ScDocComme
   override def getAllFields: Array[PsiField] = getFields
 
   override def getAllMethods: Array[PsiMethod] = getMethods
+
+  protected def getAllMethodsFiltered(filter: TermSignature => Boolean): Array[PsiMethod] = getMethods
 
   override def getAllInnerClasses: Array[PsiClass] = getInnerClasses
 

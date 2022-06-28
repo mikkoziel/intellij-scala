@@ -388,7 +388,9 @@ abstract class ScTypeDefinitionImpl[T <: ScTemplateDefinition](stub: ScTemplateD
   override def syntheticMethods: Seq[ScFunction] = SyntheticMembersInjector.inject(this)
 
   @CachedWithRecursionGuard(this, PsiMethod.EMPTY_ARRAY, ModTracker.libraryAware(this))
-  override def psiMethods: Array[PsiMethod] = getAllMethods.filter(_.containingClass == this)
+  override def psiMethods: Array[PsiMethod] = getAllMethodsFiltered(sig =>
+    sig.isExported || sig.containingClass == this
+  )
 
   @CachedWithRecursionGuard(this, None, BlockModificationTracker(this))
   override protected def desugaredInner: Option[ScTemplateDefinition] = {

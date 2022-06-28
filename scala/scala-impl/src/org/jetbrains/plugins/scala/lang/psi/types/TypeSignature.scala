@@ -12,7 +12,8 @@ import org.jetbrains.plugins.scala.lang.refactoring.util.ScalaNamesUtil
 case class TypeSignature(
   override val namedElement: PsiNamedElement,
   override val substitutor:  ScSubstitutor,
-  override val renamed:      Option[String] = None
+  override val renamed:      Option[String] = None,
+  override val isExported:   Boolean = false
 ) extends Signature {
   override val name: String = ScalaNamesUtil.clean(renamed.getOrElse(namedElement.name))
 

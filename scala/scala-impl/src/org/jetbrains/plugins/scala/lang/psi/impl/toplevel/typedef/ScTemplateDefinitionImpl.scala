@@ -89,16 +89,17 @@ abstract class ScTemplateDefinitionImpl[T <: ScTemplateDefinition] private[impl]
   override final def allSignatures: Iterator[TermSignature] =
     getSignatures(this).allSignatures
 
-  override def getAllMethods: Array[PsiMethod] = {
+  override protected def getAllMethodsFiltered(filter: TermSignature => Boolean): Array[PsiMethod] = {
     val names = mutable.HashSet.empty[String]
     val result = mutable.ArrayBuffer(getConstructors.toSeq: _*)
 
     allSignatures.foreach { signature =>
-      this.processWrappersForSignature(
-        signature,
-        isStatic = false,
-        isInterface = isInterface(signature.namedElement)
-      )(result.+=(_), names.+=(_))
+      if (filter(signature))
+        this.processWrappersForSignature(
+          signature,
+          isStatic = false,
+          isInterface = isInterface(signature.namedElement)
+        )(result.+=(_), names.+=(_))
     }
 
     for {
@@ -106,6 +107,7 @@ abstract class ScTemplateDefinitionImpl[T <: ScTemplateDefinition] private[impl]
       if addFromCompanion(companion)
 
       signature <- companion.allSignatures
+      if filter(signature)
     } this.processWrappersForSignature(
       signature,
       isStatic = true,
@@ -115,6 +117,8 @@ abstract class ScTemplateDefinitionImpl[T <: ScTemplateDefinition] private[impl]
 
     result.toArray
   }
+
+  override def getAllMethods: Array[PsiMethod] = getAllMethodsFiltered(Function.const(true))
 
   override def allFunctionsByName(name: String): Iterator[PsiMethod] = {
     TypeDefinitionMembers.getSignatures(this).forName(name)
