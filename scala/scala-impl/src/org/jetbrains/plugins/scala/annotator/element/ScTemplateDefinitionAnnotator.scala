@@ -63,9 +63,12 @@ object ScTemplateDefinitionAnnotator extends ElementAnnotator[ScTemplateDefiniti
       firstParent <- parents.firstParentClause
       ref         <- firstParent.reference
       cls         <- resolveNoCons(ref)
+      if cls.element.is[ScClass]
     } yield cls.element
 
-    val directSupers = tdef.extendsBlock.templateParents.toSeq.flatMap(_.parentClauses)
+    val directSupers         = tdef.extendsBlock.templateParents.toSeq.flatMap(_.parentClauses)
+    val directSupersBuilder  = Set.newBuilder[PsiClass]
+    val supers               = tdef.allSupers.toSet
 
     directSupers.collect {
       case parentClause =>
@@ -73,6 +76,7 @@ object ScTemplateDefinitionAnnotator extends ElementAnnotator[ScTemplateDefiniti
 
         resolvedSuper.collect {
           case ScalaResolveResult(superTrait: ScTrait, _) if parentClause.args.nonEmpty =>
+            directSupersBuilder += superTrait
             superClass.collect {
               case cls: PsiClass =>
                 if (ScalaPsiUtil.isInheritorDeep(cls, superTrait))
@@ -82,6 +86,22 @@ object ScTemplateDefinitionAnnotator extends ElementAnnotator[ScTemplateDefiniti
                   )
             }
         }
+    }
+
+    if (!tdef.is[ScTrait]) {
+      val resolvedDirectSupers = directSupersBuilder.result()
+      supers.collect {
+        case tr: ScTrait if tr.constructor.isDefined =>
+          val isDirectlyImplemented = resolvedDirectSupers.contains(tr)
+
+          val isExtendedBySuperClass = superClass match {
+            case Some(cls: PsiClass) => ScalaPsiUtil.isInheritorDeep(cls, tr)
+            case _                   => false
+          }
+
+          val isOk = isDirectlyImplemented || isExtendedBySuperClass
+          if (!isOk) holder.createErrorAnnotation(tdef.nameId, ScalaBundle.message("parameterised.trait.is.implemented.indirectly", tr.name))
+      }
     }
   }
 
