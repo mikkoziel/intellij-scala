@@ -342,7 +342,7 @@ object ScTemplateDefinitionAnnotator extends ElementAnnotator[ScTemplateDefiniti
   // TODO package private
   def annotateNeedsToBeAbstract(element: ScTemplateDefinition)
                                (implicit holder: ScalaAnnotationHolder): Unit = element match {
-    case _: ScNewTemplateDefinition | _: ScObject | _: ScEnumCase =>
+    case _: ScNewTemplateDefinition | _: ScObject | _: ScEnumCase | _: ScEnum =>
     case _ if isAbstract(element) =>
     case _ =>
       ScalaOIUtil.getMembersToImplement(element, withOwn = true).collectFirst {
