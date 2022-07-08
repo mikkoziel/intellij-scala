@@ -86,9 +86,17 @@ object AfterUpdateDottyVersionScript {
     repoDir
   }
 
-  private def cloneRepository(url: String): File = {
+  private def cloneRepository(url: String, branchOpt: Option[String]): File = {
     val cloneDir = newTempDir()
-    val sc = Process("git" :: "clone" :: url :: "." :: "--depth=1" :: Nil, cloneDir).!
+
+    val branchOption: List[String] = branchOpt match {
+      case Some(branch) => "--branch" :: branch :: Nil
+      case None => Nil
+    }
+    val commands: Seq[String] =
+      "git" :: "clone" :: branchOption ::: url :: "." :: "--depth=1" :: Nil
+
+    val sc = Process(commands, cloneDir).!
     assert(sc == 0, s"Failed ($sc) to clone $url into $cloneDir")
     cloneDir
   }
@@ -162,7 +170,9 @@ object AfterUpdateDottyVersionScript {
 
     def test(): Unit = {
       // we have to clone the repo because it needs a git history
-      val repoPath = cloneRepository("https://github.com/lampepfl/dotty/").toPath
+      //example of release branch: release-3.1.3
+      val branch =  "release-" + ScalaVersion.Latest.Scala_3.minor
+      val repoPath = cloneRepository("https://github.com/lampepfl/dotty/", Some(branch)).toPath
       val srcDir = repoPath.resolve(Paths.get("tests", "pos")).toAbsolutePath.toString
 
       clearDirectory(dottyParserTestsSuccessDir)
@@ -232,7 +242,9 @@ object AfterUpdateDottyVersionScript {
     extends TestCase {
 
     def test(): Unit = {
-      val repoPath = cloneRepository("https://github.com/lampepfl/dotty/").toPath
+      val branch = "release-" + ScalaVersion.Latest.Scala_3.minor
+      val repoPath = cloneRepository("https://github.com/lampepfl/dotty/", Some(branch)).toPath
+      println(s"### Repo path: $repoPath")
 
       clearDirectory(ComparisonTestBase.sourcePath.toString)
       clearDirectory(ComparisonTestBase.outPath.toString)
@@ -315,7 +327,7 @@ object AfterUpdateDottyVersionScript {
           |""".stripMargin
       )
 
-      runSbt(s"testCompilation --from-tasty ${File.separator}pos${File.separator}", repoPath)
+      runSbt(s"testCompilation --from-tasty pos", repoPath)
 
       copyRecursively(repoPath.resolve("tests/pos"), ComparisonTestBase.sourcePath)
 
@@ -485,10 +497,15 @@ object AfterUpdateDottyVersionScript {
     assert(allFilesIn(dottyParserTestsFailDir).size - blacklisted == allFilesIn(rangesDirectory).size)
   }
 
-  def runSbt(cmdline: String, dir: Path): Unit = {
+  private def runSbt(cmdline: String, dir: Path): Unit = {
+    println(
+      s"""### Running sbt command: $cmdline
+         |### in directory: $dir""".stripMargin
+    )
     val isWindows = System.getProperty("os.name").toLowerCase.contains("win")
     val sbtExecutable = if (isWindows) "sbt.bat" else "sbt"
-    val sc2 = Process(sbtExecutable :: cmdline :: Nil, dir.toFile).!
+    val process = Process(sbtExecutable :: cmdline :: Nil, dir.toFile)
+    val sc2 = process.!
     assert(sc2 == 0, s"sbt failed with exit code $sc2")
   }
 

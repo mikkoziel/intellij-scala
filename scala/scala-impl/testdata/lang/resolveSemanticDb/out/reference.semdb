@@ -646,7 +646,7 @@ Document tests/pos/reference/delegates.scala
 (212:3..212:4) _empty_/Test.s. -> 211:7
 (212:5..212:13) _empty_/PostConditions.ensuring(). -> 137:9
 (212:14..212:20) _empty_/PostConditions.result(). -> 134:7
-(212:21..212:23) scala/Int#`==`(+3).
+(212:21..212:23) scala/Any#`==`().
 (213:5..213:9) _empty_/Test. -> 208:8
 (223:19..223:25) scala/Predef.String#
 (224:22..224:28) _empty_/Completions.Future# -> 217:9

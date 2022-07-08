@@ -25,6 +25,7 @@ Document tests/pos/13491.scala
 (19:22..19:24) _empty_/`::`# -> 6:18
 (19:25..19:26) local0 -> 19:13
 (19:28..19:29) local1 -> 19:16
+(20:10..20:11) scala/Any#
 (20:22..20:23) _empty_/HListable.HL0#[T] -> 16:12
 (20:24..20:26) _empty_/`::`# -> 6:18
 (20:27..20:31) _empty_/HNil# -> 8:14
@@ -82,6 +83,7 @@ Document tests/pos/13491.scala
 (53:106..53:108) _empty_/TailSwitch.TailSwitch0#[TI] -> 53:57
 (54:10..54:11) _empty_/TailSwitch.TailSwitch0#[L] -> 53:20
 (54:15..54:16) _empty_/TailSwitch.TailSwitch0#[R] -> 53:70
+(55:10..55:11) scala/Any#
 (56:5..56:7) _empty_/TailSwitch.TailSwitch0#[LI] -> 53:32
 (57:12..57:13) _empty_/TailSwitch.TailSwitch0#[T] -> 53:45
 (57:17..57:25) _empty_/TailSwitch.Prepend0# -> 40:8
