@@ -5,11 +5,6 @@ import org.jetbrains.plugins.scala.SlowTests
 import org.jetbrains.plugins.scala.base.SharedTestProjectToken
 import org.junit.experimental.categories.Category
 
-/**
- * @author Nikolay Obedin
- * @since 7/17/14.
- */
-
 abstract class SbtCompletionDefinitionTestBase extends SbtCompletionTestBase {
   self: MockSbtBase =>
 

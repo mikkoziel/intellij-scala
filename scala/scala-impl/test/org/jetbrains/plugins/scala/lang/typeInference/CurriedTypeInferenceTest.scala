@@ -2,10 +2,6 @@ package org.jetbrains.plugins.scala.lang.typeInference
 
 import org.jetbrains.plugins.scala.base.ScalaLightCodeInsightFixtureTestAdapter
 
-/**
-  * @author Roman.Shein
-  * @since 01.04.2016.
-  */
 class CurriedTypeInferenceTest extends ScalaLightCodeInsightFixtureTestAdapter {
   def testSCL7332(): Unit = checkTextHasNoErrors(
     """

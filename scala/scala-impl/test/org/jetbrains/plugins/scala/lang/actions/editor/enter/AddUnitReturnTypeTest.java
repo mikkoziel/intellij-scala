@@ -6,10 +6,6 @@ import org.jetbrains.annotations.NotNull;
 import org.junit.runner.RunWith;
 import org.junit.runners.AllTests;
 
-/**
- * User: Dmitry.Naydanov
- * Date: 09.07.14.
- */
 @RunWith(AllTests.class)
 public class AddUnitReturnTypeTest extends AbstractEnterActionTestBase {
   public AddUnitReturnTypeTest() {

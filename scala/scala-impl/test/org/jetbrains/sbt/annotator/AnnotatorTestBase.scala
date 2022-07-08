@@ -9,10 +9,6 @@ import org.junit.Assert._
 
 import java.io.File
 
-/**
- * @author Nikolay Obedin
- * @since 8/4/14.
- */
 abstract class AnnotatorTestBase extends HeavyPlatformTestCase {
 
   protected def testdataPath: String = s"$getTestDataPath/annotator/Sbt"

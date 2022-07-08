@@ -5,10 +5,6 @@ import org.intellij.lang.annotations.Language
 import org.jetbrains.plugins.scala.lang.psi.api.ScalaFile
 import org.junit.Assert._
 
-/**
- * User: Dmitry Naydanov
- * Date: 7/3/12
- */
 class InterpolatedStringsAnnotatorTest extends base.ScalaLightCodeInsightFixtureTestAdapter {
 
   import InterpolatedStringsAnnotatorTest._

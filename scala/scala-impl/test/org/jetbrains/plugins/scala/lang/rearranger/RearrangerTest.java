@@ -17,10 +17,6 @@ import org.junit.runners.AllTests;
 
 import java.util.Collections;
 
-/**
- * @author Roman.Shein
- * Date: 26.07.13
- */
 @RunWith(AllTests.class)
 public class RearrangerTest extends ScalaFileSetTestCase {
 

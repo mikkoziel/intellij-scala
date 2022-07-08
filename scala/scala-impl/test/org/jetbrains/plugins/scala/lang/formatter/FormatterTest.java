@@ -30,11 +30,6 @@ import org.junit.runners.AllTests;
 
 import java.util.Collections;
 
-/**
- * Created by IntelliJ IDEA.
- * User: Ilya.Sergey
- */
-
 @RunWith(AllTests.class)
 public class FormatterTest extends ScalaFileSetTestCase {
 

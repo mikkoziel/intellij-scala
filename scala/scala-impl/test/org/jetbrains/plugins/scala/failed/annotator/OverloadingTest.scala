@@ -13,12 +13,6 @@ import org.jetbrains.plugins.scala.lang.psi.types.api.TypePresentation
 import org.jetbrains.plugins.scala.util.assertions.MatcherAssertions
 import org.junit.Assert._
 
-/**
-  * User: Dmitry.Naydanov
-  * Date: 23.03.16.
-  * 
-  *  
-  */
 abstract class OverloadingTestBase extends ScalaLightCodeInsightFixtureTestAdapter with MatcherAssertions {
 
   //TODO this class contains a fair amount of a copy-paste code, however refactoring isn't practical here as the class is to be removed soon 

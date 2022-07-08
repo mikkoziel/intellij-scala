@@ -2,10 +2,6 @@ package org.jetbrains.plugins.scala.lang.typeInference
 
 import org.jetbrains.plugins.scala.base.ScalaLightCodeInsightFixtureTestAdapter
 
-/**
-  * @author anton.yalyshev
-  * @since 07.09.18.
-  */
 class ApplyConformanceTest extends ScalaLightCodeInsightFixtureTestAdapter {
 
   def testSCL13654(): Unit = {

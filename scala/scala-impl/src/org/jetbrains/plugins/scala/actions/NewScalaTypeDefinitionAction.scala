@@ -26,11 +26,6 @@ import org.jetbrains.sbt.project.module.SbtModuleType
 
 import java.util.Properties
 
-/**
- * User: Alexander Podkhalyuzin
- * Date: 15.09.2009
- */
-
 class NewScalaTypeDefinitionAction extends CreateTemplateInPackageAction[ScTypeDefinition](
   ScalaBundle.message("newclass.menu.action.text"),
   ScalaBundle.message("newclass.menu.action.description"),

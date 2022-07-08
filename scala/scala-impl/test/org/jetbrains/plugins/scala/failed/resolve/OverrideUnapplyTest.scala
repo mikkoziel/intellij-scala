@@ -5,10 +5,6 @@ import org.jetbrains.plugins.scala.base.SimpleTestCase
 import org.jetbrains.plugins.scala.lang.psi.api.base.ScStableCodeReference
 import org.jetbrains.plugins.scala.lang.psi.api.statements.ScFunctionDefinition
 
-/**
-  * @author mucianm 
-  * @since 25.03.16.
-  */
 class OverrideUnapplyTest extends SimpleTestCase {
 
   override protected def shouldPass: Boolean = false

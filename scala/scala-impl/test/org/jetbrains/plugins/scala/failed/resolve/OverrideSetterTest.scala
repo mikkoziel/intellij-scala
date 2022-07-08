@@ -7,10 +7,6 @@ import org.jetbrains.plugins.scala.base.SimpleTestCase
 import org.jetbrains.plugins.scala.extensions.PsiElementExt
 import org.jetbrains.plugins.scala.lang.psi.api.expr.ScAssignment
 
-/**
-  * @author mucianm 
-  * @since 23.03.16.
-  */
 class OverrideSetterTest extends SimpleTestCase {
 
   override protected def shouldPass: Boolean = false

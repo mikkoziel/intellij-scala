@@ -9,10 +9,6 @@ import org.jetbrains.plugins.scala.lang.formatting.settings.ScalaCodeStyleSettin
 import org.junit.runner.RunWith;
 import org.junit.runners.AllTests;
 
-/**
- * User: Dmitry Naydanov
- * Date: 10/1/12
- */
 @RunWith(AllTests.class)
 public class MultiLineStringWithLargeTabsAllTest extends AbstractEnterActionTestBase {
   private static final String DATA_PATH = "/actions/editor/enter/multiLineStringData/withTabs/indentAndMargin/4tabs";

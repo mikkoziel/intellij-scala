@@ -21,9 +21,6 @@ import java.io.File
 import scala.annotation.nowarn
 import scala.jdk.CollectionConverters._
 
-/**
- * @author Alexander Podkhalyuzin
- */
 @nowarn("msg=ScalaLightPlatformCodeInsightTestCaseAdapter")
 abstract class KeywordCompletionTestBase extends ScalaLightPlatformCodeInsightTestCaseAdapter {
 

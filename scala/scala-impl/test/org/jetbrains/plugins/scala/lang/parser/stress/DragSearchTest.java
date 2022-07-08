@@ -15,9 +15,6 @@ import org.junit.Assert;
 import org.junit.runner.RunWith;
 import org.junit.runners.AllTests;
 
-/**
- * @author ilyas
- */
 @RunWith(AllTests.class)
 public class DragSearchTest extends ScalaFileSetTestCase {
   private static final int MAX_ROLLBACKS = 30;

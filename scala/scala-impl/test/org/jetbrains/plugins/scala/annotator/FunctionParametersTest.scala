@@ -2,10 +2,6 @@ package org.jetbrains.plugins.scala.annotator
 
 import org.jetbrains.plugins.scala.base.ScalaLightCodeInsightFixtureTestAdapter
 
-/**
-  * @author anton.yalyshev
-  * @since 14.04.16.
-  */
 class FunctionParametersTest extends ScalaLightCodeInsightFixtureTestAdapter {
 
   def testSCL12708(): Unit = {

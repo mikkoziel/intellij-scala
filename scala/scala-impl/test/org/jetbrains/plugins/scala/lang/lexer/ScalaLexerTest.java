@@ -19,9 +19,6 @@ import org.jetbrains.annotations.NotNull;
 import org.junit.runner.RunWith;
 import org.junit.runners.AllTests;
 
-/**
- * @author ilyas
- */
 @RunWith(AllTests.class)
 public class ScalaLexerTest extends ScalaLexerTestBase {
 

@@ -9,10 +9,6 @@ import org.jetbrains.plugins.scala.lang.formatting.settings.ScalaCodeStyleSettin
 import org.junit.runner.RunWith;
 import org.junit.runners.AllTests;
 
-/**
- * User: Dmitry Naydanov
- * Date: 4/16/12
- */
 @RunWith(AllTests.class)
 public class MultiLineStringAllTest extends AbstractEnterActionTestBase {
   public static final String DATA_PATH = "/actions/editor/enter/multiLineStringData/indentAndMargin";

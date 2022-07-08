@@ -5,9 +5,6 @@ import org.jetbrains.plugins.scala.base.SimpleTestCase
 import org.jetbrains.plugins.scala.extensions.PsiElementExt
 import org.jetbrains.plugins.scala.lang.psi.api.ScalaFile
 
-/**
-  * @author ilinum
-  */
 class ValueClassAnnotatorTest extends SimpleTestCase {
 
   def testPrimaryConstructorParameters(): Unit = {

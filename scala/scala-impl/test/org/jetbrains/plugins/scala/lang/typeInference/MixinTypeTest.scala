@@ -2,10 +2,6 @@ package org.jetbrains.plugins.scala.lang.typeInference
 
 import org.jetbrains.plugins.scala.base.ScalaLightCodeInsightFixtureTestAdapter
 
-/**
-  * @author Anton Yalyshev
-  * @since 07.09.2018.
-  */
 class MixinTypeTest extends ScalaLightCodeInsightFixtureTestAdapter {
 
   def testSCL6573(): Unit = {

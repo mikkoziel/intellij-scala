@@ -19,9 +19,6 @@ import org.junit.Assert._
 import scala.jdk.CollectionConverters._
 import scala.util.control.NonFatal
 
-/**
-  * @author adkozlov
-  */
 abstract class EditorActionTestBase extends ScalaLightCodeInsightFixtureTestAdapter with ShortCaretMarker {
 
   protected val q  : String = "\""
